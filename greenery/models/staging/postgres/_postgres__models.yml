@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_addresses
+    description: Customer addresses
+    columns:
+      - name: address_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_events
+    description: Events that happen in the store
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_order_items
+    description: Line items in an order
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - product_id
+  - name: stg_orders
+    description: Customer orders
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_products
+    description: Products offered in the store
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_promos
+    description: Store promos
+    columns:
+      - name: promo_id
+        tests:
+          - not_null
+          - unique
+  - name: stg_users
+    description: Customers
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
