@@ -3,14 +3,14 @@
 ## Part 1. Models
 
 - What is your user repeat rate?
-
-``` sql
-SELECT
-    COUNT_IF(amt_of_orders > 1) AS repeat_users,
-    COUNT(1) AS total_users,
-    repeat_users/total_users as ratio
-  FROM FACT_USER_ORDERS;
-```
+  - 0.761538
+  ``` sql
+  SELECT
+      COUNT_IF(amt_of_orders > 1) AS repeat_users,
+      COUNT(1) AS total_users,
+      repeat_users/total_users as ratio
+    FROM FACT_USER_ORDERS;
+  ```
 
 - What are good indicators of a user who will likely purchase again?
   - Has recent page views
