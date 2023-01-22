@@ -27,6 +27,7 @@ SELECT
   - If one business unit was using a model, I kept the model in that unit's folder. If more than one unit was using a model, I moved it to the "core" folder
 
 - Use the dbt docs to visualize your model DAGs to ensure the model layers make sense
+![image](https://user-images.githubusercontent.com/40395627/213938084-26830a20-0444-45e6-977d-268b934394b0.png)
 
 ## Part 2: Tests
 
