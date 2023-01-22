@@ -15,6 +15,16 @@ models:
         tests:
           - not_null
           - unique
+      - name: session_id
+        tests:
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+      - name: event_type
+        tests:
+          - accepted_values:
+              values: ['add_to_cart', 'checkout', 'package_shipped', 'page_view']
   - name: stg_order_items
     description: Line items in an order
     tests:
@@ -22,6 +32,13 @@ models:
           combination_of_columns:
             - order_id
             - product_id
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: quantity
+        tests:
+          - positive_values_and_zero
   - name: stg_orders
     description: Customer orders
     columns:
@@ -29,6 +46,23 @@ models:
         tests:
           - not_null
           - unique
+      - name: address_id
+        test:
+          - not_null
+      - name: status
+        test:
+          - accepted_values:
+              values: ['delivered', 'preparing', 'shipped']
+          - not_null
+      - name: order_cost
+        tests:
+          - positive_values_and_zero
+      - name: shipping_cost
+        tests:
+          - positive_values_and_zero
+      - name: order_total
+        tests:
+          - positive_values_and_zero
   - name: stg_products
     description: Products offered in the store
     columns:
@@ -36,6 +70,12 @@ models:
         tests:
           - not_null
           - unique
+      - name: price
+        tests:
+          - positive_values_and_zero
+      - name: inventory
+        tests:
+          - positive_values_and_zero
   - name: stg_promos
     description: Store promos
     columns:
@@ -43,6 +83,14 @@ models:
         tests:
           - not_null
           - unique
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive']
+          - not_null
+      - name: discount
+        tests:
+          - positive_values_and_zero
   - name: stg_users
     description: Customers
     columns:
@@ -50,3 +98,105 @@ models:
         tests:
           - not_null
           - unique
+  - name: int_orders
+    description: A rollup of order items by order id
+    columns:
+      - name: amt_unique_products
+        tests:
+          - positive_values_and_zero
+      - name: amt_total_products
+        tests:
+          - positive_values_and_zero
+  - name: int_product_order_items
+    description: A rollup of products joined with order items by product id
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+      - name: amt_sold
+        tests:
+          - positive_values_and_zero
+      - name: revenue
+        tests:
+          - positive_values_and_zero
+  - name: int_product_page_views
+    description: The amount of page views by product id
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+      - name: page_views
+        tests:
+          - positive_values_and_zero
+  - name: int_product_sessions
+    description: Counts the number of times a product is abandoned in a cart
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+      - name: times_abandoned_in_cart
+        tests:
+          - positive_values_and_zero
+  - name: int_sessions
+    description: A rollup of events by session id
+    columns:
+      - name: session_id
+        tests:
+          - not_null
+      - name: first_event_utc
+        tests:
+          - not_null
+      - name: last_event_utc
+        tests:
+          - not_null
+  - name: int_user_orders
+    description: A rollup of orders joined with promos by user id
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+      - name: first_order_made_utc
+        tests:
+          - not_null
+      - name: last_order_made_utc
+        tests:
+          - not_null
+      - name: amt_of_orders
+        tests:
+          - positive_values_and_zero
+      - name: amt_of_promos_used
+        tests:
+          - positive_values_and_zero
+      - name: total_discounts_redeemed
+        tests:
+          - positive_values_and_zero
+      - name: total_order_costs_spent
+        tests:
+          - positive_values_and_zero
+      - name: total_shipping_costs_spent
+        tests:
+          - positive_values_and_zero
+      - name: orders_total
+        tests:
+          - positive_values_and_zero
+  - name: int_user_page_views
+    description: The amount of page views per user
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+      - name: page_views
+        tests:
+          - positive_values_and_zero
+  - name: dim_products
+    description: 1:1 to the product staging table
+  - name: dim_users
+    description: A joined table of users, addresses, and page views by user
+  - name: fact_orders
+    description: A joined table of the order staging table and the order items rollup
+  - name: fact_products
+    description: A joined table of the products staging table, sessions rollup, order items rollup, and page views rollup
+  - name: fact_sessions
+    description: 1:1 with the sessions rollup
+  - name: fact_user_orders
+    description: The user table joined with the order by user rollup

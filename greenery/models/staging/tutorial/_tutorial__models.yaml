@@ -9,10 +9,10 @@ models:
           - not_null
       - name: height
         tests:
-          - positive_values
+          - positive_values_and_zero
       - name: weight_lbs
         tests:
-          - positive_values
+          - positive_values_and_zero
       - name: weight_kg
         tests:
-          - positive_values
+          - positive_values_and_zero
