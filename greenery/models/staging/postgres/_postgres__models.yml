@@ -119,22 +119,16 @@ models:
       - name: revenue
         tests:
           - positive_values_and_zero
-  - name: int_product_page_views
-    description: The amount of page views by product id
+  - name: int_product_sessions
+    description: Products aggregated by session id
     columns:
-      - name: product_id
-        tests:
-          - not_null
-      - name: page_views
+      - name: added_to_cart
         tests:
           - positive_values_and_zero
-  - name: int_product_sessions
-    description: Counts the number of times a product is abandoned in a cart
-    columns:
-      - name: product_id
+      - name: page_viewed
         tests:
-          - not_null
-      - name: times_abandoned_in_cart
+          - positive_values_and_zero
+      - name: session_completed
         tests:
           - positive_values_and_zero
   - name: int_sessions
@@ -195,7 +189,17 @@ models:
   - name: fact_orders
     description: A joined table of the order staging table and the order items rollup
   - name: fact_products
-    description: A joined table of the products staging table, sessions rollup, order items rollup, and page views rollup
+    description: A rollup of product session stats
+    columns:
+      - name: amt_added_to_cart
+        tests:
+          - positive_values_and_zero
+      - name: amt_page_viewed
+        tests:
+          - positive_values_and_zero
+      - name: amt_sessions_bought
+        tests:
+          - positive_values_and_zero
   - name: fact_sessions
     description: 1:1 with the sessions rollup
   - name: fact_user_orders
