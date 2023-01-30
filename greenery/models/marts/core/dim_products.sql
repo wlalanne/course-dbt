@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-SELECT 
+SELECT
     products.product_id,
     products.name,
     products.price,
