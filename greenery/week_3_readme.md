@@ -1,7 +1,5 @@
 # Week 3
 
-Compare your week 2 answers to others
-
 ## Part 1: Create new models to answer the first two questions (answer questions in README file)
 
 - What is our overall conversion rate?
