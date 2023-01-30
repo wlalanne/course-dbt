@@ -1,6 +1,6 @@
 # Week 3
 
-## Part 1: Create new models to answer the first two questions (answer questions in README file)
+## Part 1: Create new models to answer the first two questions
 
 - What is our overall conversion rate?
   - The conversion rate is 0.624567
