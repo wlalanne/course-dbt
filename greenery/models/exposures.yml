@@ -1,0 +1,13 @@
+version: 2
+
+exposures:  
+  - name: Product Funnel Dashboard
+    description: >
+      Models for the product funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: wesna
+      email: wazzy_wes_on_the_west_siiiidddeeeee@greenery.com
+    depends_on:
+      - ref('product_funnel')
